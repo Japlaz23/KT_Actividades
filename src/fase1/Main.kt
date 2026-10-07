@@ -1,4 +1,4 @@
-package Fase1
+package fase1
 
 // Disenyar una funció que rebi una variable (String?) i la mostri al terminal. Si la variable conte text,
 // mostrarà el text, si no, mostrarà un missatge indicant que la variable està buida, ha de mostrar
