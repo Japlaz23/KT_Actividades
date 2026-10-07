@@ -6,15 +6,15 @@ package fase3
 //Consultar tots els productes.
 //Actualitzar l'stock o el preu d'un producte donat el seu ID.
 
-class Inventario {
+class Inventariof3 {
 
-    private val listaProd = mutableListOf<Producto>()
+    private val listaProd = mutableListOf<Productof3>()
     //Registrar un nou producte.
-    fun registrarProd(producto: Producto){
+    fun registrarProd(producto: Productof3){
         listaProd.add(producto)
     }
     //Consultar tots els productes.
-    fun consultarProd(): List<Producto> {
+    fun consultarProd(): List<Productof3> {
         return  listaProd.toList()
     }
 

@@ -4,7 +4,7 @@ package fase3
 
 
 fun main(){
-    val inventario = Inventario()
+    val inventario = Inventariof3()
     val salir = false
 
     print("Bienvenido al inventario: ")
@@ -16,7 +16,7 @@ fun main(){
         println(" 2. Mostrar todos los productos")
         println(" 3. Actulizar precio o stock de un producto")
         println(" 4. Salir")
-        println("Seleccione una opcion")
+        println("Seleccione una opcion: ")
 
         // Leer una opción ingresada de esto me lo lei de la documentación de kotlin y de una pagina web que me encontre
         // por lo que entendi funciona como el scanner en java
@@ -48,12 +48,12 @@ fun main(){
                 }else if(precio< 0 || stock < 0 ){
                     println("Error: No pueden ser valores negativos")
                 }else{
-                    val nuevoProducto = Producto(
+                    val nuevoProducto = Productof3(
                         id = id,
                         nombre = nombre,
                         precio = precio,
                         stock = stock,
-                        categoria = Categoria.valueOf(categoria)
+                        categoria = Categoriaf3.valueOf(categoria)
                     )
                     inventario.registrarProd(nuevoProducto)
                     println("Producto registrado correctamente")
@@ -76,22 +76,44 @@ fun main(){
             "3"-> {
                 println("\n --- Actualizando precio / stock ---")
                 println("Introduce el ID del producto: ")
-                val id = readln().toInt()
+                val id = readln().toIntOrNull()
 
                 if (id == null) {
                     println("Id del procducto erroneo.")
                 } else{
                     println("Nuevo precio del producto: (Dejar en blanco para no cambiar) ")
-                    val precioInput = readln()
-                    val nuevoPrecio = precioInput.toDouble()
+                    val precioInput = readln().trim()
+                    val nuevoPrecio = precioInput.takeIf { it.isNotEmpty() }?.toDoubleOrNull()
 
                     println("Nuevo stock del producto:(Dejar en blanco para no cambiar) ")
+                    val stockInput = readln().trim()
+                    val nuevoStock = stockInput.takeIf { it.isNotEmpty() }?.toIntOrNull()
 
+                    val precioInvalido = precioInput.isNotEmpty() && nuevoPrecio == null
+                    val stockInvalido = stockInput.isNotEmpty() && nuevoStock == null
+
+                    if (precioInvalido || stockInvalido) {
+                        println("Error: el precio o el stock no tienen un formato válido.")
+                    } else if (nuevoPrecio == null && nuevoStock == null) {
+                        println("No se ha realizado ningún cambio")
+                    } else if ((nuevoPrecio != null && nuevoPrecio < 0) ||
+                        (nuevoStock != null && nuevoStock < 0)) {
+                        println("El precio y el stock no pueden ser negativos.")
+                    } else {
+                        inventario.actualizarProd(id, nuevoStock, nuevoPrecio)
+                        println("Producto actualizado correctamente")
+                    }
                 }
+            }
 
+            "4" -> {
+                println("Saliendo del inventario...")
+                break
+            }
+
+            else -> {
+                println("Opción inválida. Por favor, seleccione una opción válida.")
             }
         }
-
-
     }
 }
