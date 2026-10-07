@@ -1,4 +1,4 @@
-package Fase2
+package fase3
 
 // Crear una class per a l'entitat Producte, que contingui
 // identificador, nom, preu i categoria.
